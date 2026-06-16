@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: bolao-copa
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:bolao_copa}?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=America/Sao_Paulo&allowPublicKeyRetrieval=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: false
+
+  thymeleaf:
+    cache: false
+
+server:
+  port: ${SERVER_PORT:8080}
+
+# Configuracoes da aplicacao
+app:
+  jwt:
+    # IMPORTANTE: em producao, defina via variavel de ambiente APP_JWT_SECRET.
+    secret: ${APP_JWT_SECRET:troque-esta-chave-secreta-de-no-minimo-32-caracteres-bolao-copa-2026}
+    # 7 dias em milissegundos
+    expiration-ms: ${APP_JWT_EXPIRATION_MS:604800000}
+  # Admin inicial criado automaticamente na primeira execucao
+  admin:
+    nome: ${ADMIN_NOME:Administrador}
+    email: ${ADMIN_EMAIL:admin@bolao.com}
+    senha: ${ADMIN_SENHA:admin123}
+  seed: ${APP_SEED:true}
+
+logging:
+  level:
+    org.springframework.security: INFO

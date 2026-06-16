@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Bolao Copa 2026",
+    "slug": "bolao-copa-2026",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0a2540"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "predictiveBackGestureEnabled": false,
+      "package": "com.unialfa.bolaocopa"
+    },
+    "web": {},
+    "plugins": [
+      "expo-router"
+    ],
+    "scheme": "bolao-copa",
+    "extra": {
+      "apiBaseUrl": "http://10.0.2.2:8080"
+    }
+  }
+}

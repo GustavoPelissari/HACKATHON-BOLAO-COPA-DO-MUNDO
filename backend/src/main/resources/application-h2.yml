@@ -1,0 +1,14 @@
+# Profile de execucao SEM MySQL (banco H2 em arquivo local).
+# Use apenas para testar/demonstrar rapidamente:
+#   mvn spring-boot:run "-Dspring-boot.run.profiles=h2"
+#
+# A configuracao padrao (application.yml) continua usando MySQL, conforme o edital.
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/bolao;AUTO_SERVER=TRUE
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update

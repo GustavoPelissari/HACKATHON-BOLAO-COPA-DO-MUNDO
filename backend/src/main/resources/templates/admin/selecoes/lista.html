@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: cabecalho('Selecoes')}"></head>
+<body class="admin-body">
+<div class="layout">
+    <div th:replace="~{admin/fragments :: sidebar('selecoes')}"></div>
+
+    <main class="conteudo">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="titulo-pagina">Selecoes</h1>
+            <a th:href="@{/admin/selecoes/nova}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Nova selecao</a>
+        </div>
+
+        <div th:replace="~{admin/fragments :: alertas}"></div>
+
+        <div class="card mt-3">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>Bandeira</th>
+                        <th>Nome</th>
+                        <th>Codigo FIFA</th>
+                        <th>Grupo</th>
+                        <th class="text-end">Acoes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="s : ${selecoes}">
+                        <td>
+                            <img th:if="${s.bandeiraUrl}" th:src="${s.bandeiraUrl}" alt="bandeira"
+                                 style="width:36px;height:24px;object-fit:cover;border-radius:3px;">
+                            <span th:unless="${s.bandeiraUrl}" class="text-muted">-</span>
+                        </td>
+                        <td th:text="${s.nome}">Brasil</td>
+                        <td><span class="badge bg-secondary" th:text="${s.codigoFifa}">BRA</span></td>
+                        <td th:text="${s.grupo}">A</td>
+                        <td class="text-end">
+                            <a th:href="@{/admin/selecoes/{id}/editar(id=${s.id})}"
+                               class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                            <form method="post" th:action="@{/admin/selecoes/{id}/remover(id=${s.id})}"
+                                  class="d-inline" onsubmit="return confirm('Remover esta selecao?');">
+                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${selecoes.isEmpty()}">
+                        <td colspan="5" class="text-center text-muted py-4">Nenhuma selecao cadastrada.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+<th:block th:replace="~{admin/fragments :: scripts}"></th:block>
+</body>
+</html>

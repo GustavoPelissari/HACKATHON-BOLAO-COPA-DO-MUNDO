@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: cabecalho('Selecao')}"></head>
+<body class="admin-body">
+<div class="layout">
+    <div th:replace="~{admin/fragments :: sidebar('selecoes')}"></div>
+
+    <main class="conteudo">
+        <h1 class="titulo-pagina" th:text="${selecao.id} == null ? 'Nova selecao' : 'Editar selecao'">Selecao</h1>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <form method="post" th:action="@{/admin/selecoes}">
+                    <input type="hidden" name="id" th:value="${selecao.id}">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nome *</label>
+                            <input type="text" name="nome" class="form-control" th:value="${selecao.nome}" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Codigo FIFA *</label>
+                            <input type="text" name="codigoFifa" class="form-control text-uppercase"
+                                   maxlength="3" th:value="${selecao.codigoFifa}" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Grupo</label>
+                            <input type="text" name="grupo" class="form-control" maxlength="2" th:value="${selecao.grupo}">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">URL da bandeira/escudo</label>
+                            <input type="url" name="bandeiraUrl" class="form-control" th:value="${selecao.bandeiraUrl}">
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> Salvar</button>
+                        <a th:href="@{/admin/selecoes}" class="btn btn-outline-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<th:block th:replace="~{admin/fragments :: scripts}"></th:block>
+</body>
+</html>

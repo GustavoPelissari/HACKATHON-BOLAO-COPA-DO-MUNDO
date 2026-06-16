@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: cabecalho('Partidas')}"></head>
+<body class="admin-body">
+<div class="layout">
+    <div th:replace="~{admin/fragments :: sidebar('partidas')}"></div>
+
+    <main class="conteudo">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="titulo-pagina">Partidas</h1>
+            <a th:href="@{/admin/partidas/nova}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Nova partida</a>
+        </div>
+
+        <div th:replace="~{admin/fragments :: alertas}"></div>
+
+        <div class="card mt-3">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>Data/Hora</th>
+                        <th>Partida</th>
+                        <th>Fase</th>
+                        <th>Status</th>
+                        <th>Placar</th>
+                        <th class="text-end">Acoes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="p : ${partidas}">
+                        <td th:text="${#temporals.format(p.dataHora, 'dd/MM/yyyy HH:mm')}">01/01 18:00</td>
+                        <td>
+                            <span th:text="${p.selecaoMandante.codigoFifa}">BRA</span>
+                            <span class="text-muted">x</span>
+                            <span th:text="${p.selecaoVisitante.codigoFifa}">FRA</span>
+                        </td>
+                        <td th:text="${p.fase.descricao}">Grupos</td>
+                        <td>
+                            <span class="badge"
+                                  th:classappend="${p.status.name() == 'ENCERRADA'} ? 'bg-success' : (${p.status.name() == 'EM_ANDAMENTO'} ? 'bg-warning text-dark' : 'bg-secondary')"
+                                  th:text="${p.status}">AGENDADA</span>
+                        </td>
+                        <td>
+                            <span th:if="${p.possuiResultado()}"
+                                  th:text="${p.golsMandante} + ' x ' + ${p.golsVisitante}">2 x 1</span>
+                            <span th:unless="${p.possuiResultado()}" class="text-muted">-</span>
+                        </td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                    th:data-bs-target="'#resultado-' + ${p.id}" title="Lancar resultado">
+                                <i class="bi bi-trophy"></i></button>
+                            <a th:href="@{/admin/partidas/{id}/editar(id=${p.id})}"
+                               class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                            <form method="post" th:action="@{/admin/partidas/{id}/remover(id=${p.id})}"
+                                  class="d-inline" onsubmit="return confirm('Remover esta partida?');">
+                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+
+                            <!-- Modal lancar/corrigir resultado -->
+                            <div class="modal fade" th:id="'resultado-' + ${p.id}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content text-start">
+                                        <form method="post" th:action="@{/admin/partidas/{id}/resultado(id=${p.id})}">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Lancar resultado</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="text-muted">
+                                                    Lancar/corrigir o resultado recalcula automaticamente
+                                                    a pontuacao dos palpites (RF-044).
+                                                </p>
+                                                <div class="row g-3 align-items-end">
+                                                    <div class="col">
+                                                        <label class="form-label" th:text="${p.selecaoMandante.nome}">Mandante</label>
+                                                        <input type="number" min="0" name="golsMandante" class="form-control"
+                                                               th:value="${p.golsMandante}" required>
+                                                    </div>
+                                                    <div class="col-auto pb-2 fw-bold">x</div>
+                                                    <div class="col">
+                                                        <label class="form-label" th:text="${p.selecaoVisitante.nome}">Visitante</label>
+                                                        <input type="number" min="0" name="golsVisitante" class="form-control"
+                                                               th:value="${p.golsVisitante}" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-success">Lancar e pontuar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${partidas.isEmpty()}">
+                        <td colspan="6" class="text-center text-muted py-4">Nenhuma partida cadastrada.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+<th:block th:replace="~{admin/fragments :: scripts}"></th:block>
+</body>
+</html>

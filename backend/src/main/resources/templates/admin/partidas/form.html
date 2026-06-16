@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: cabecalho('Partida')}"></head>
+<body class="admin-body">
+<div class="layout">
+    <div th:replace="~{admin/fragments :: sidebar('partidas')}"></div>
+
+    <main class="conteudo">
+        <h1 class="titulo-pagina" th:text="${partida.id} == null ? 'Nova partida' : 'Editar partida'">Partida</h1>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <form method="post" th:action="@{/admin/partidas}">
+                    <input type="hidden" name="id" th:value="${partida.id}">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Selecao mandante *</label>
+                            <select name="mandanteId" class="form-select" required>
+                                <option value="" disabled th:selected="${partida.selecaoMandante == null}">Selecione...</option>
+                                <option th:each="s : ${selecoes}" th:value="${s.id}" th:text="${s.nome}"
+                                        th:selected="${partida.selecaoMandante != null and partida.selecaoMandante.id == s.id}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Selecao visitante *</label>
+                            <select name="visitanteId" class="form-select" required>
+                                <option value="" disabled th:selected="${partida.selecaoVisitante == null}">Selecione...</option>
+                                <option th:each="s : ${selecoes}" th:value="${s.id}" th:text="${s.nome}"
+                                        th:selected="${partida.selecaoVisitante != null and partida.selecaoVisitante.id == s.id}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Data e hora *</label>
+                            <input type="datetime-local" name="dataHora" class="form-control" required
+                                   th:value="${partida.dataHora != null} ? ${#temporals.format(partida.dataHora, 'yyyy-MM-dd''T''HH:mm')} : ''">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Fase *</label>
+                            <select name="fase" class="form-select" required>
+                                <option th:each="f : ${fases}" th:value="${f}" th:text="${f.descricao}"
+                                        th:selected="${partida.fase == f}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Grupo</label>
+                            <input type="text" name="grupo" class="form-control" maxlength="2" th:value="${partida.grupo}">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Estadio</label>
+                            <input type="text" name="estadio" class="form-control" th:value="${partida.estadio}">
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> Salvar</button>
+                        <a th:href="@{/admin/partidas}" class="btn btn-outline-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<th:block th:replace="~{admin/fragments :: scripts}"></th:block>
+</body>
+</html>

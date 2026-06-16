@@ -1,0 +1,163 @@
+:root {
+    --azul: #0d6efd;
+    --azul-escuro: #0a2540;
+    --cinza-fundo: #f4f6fa;
+}
+
+body.admin-body {
+    background: var(--cinza-fundo);
+    margin: 0;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+    width: 240px;
+    background: var(--azul-escuro);
+    color: #cdd7e5;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 14px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.sidebar-brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.sidebar-brand .brand-icon {
+    font-size: 1.4rem;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 16px;
+    flex: 1;
+}
+
+.sidebar-nav a {
+    color: #cdd7e5;
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: .95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background .15s, color .15s;
+}
+
+.sidebar-nav a:hover {
+    background: rgba(255, 255, 255, .08);
+    color: #fff;
+}
+
+.sidebar-nav a.ativo {
+    background: var(--azul);
+    color: #fff;
+}
+
+.sidebar-logout {
+    margin-top: auto;
+}
+
+/* ===== Conteudo ===== */
+.conteudo {
+    flex: 1;
+    padding: 28px 34px;
+    max-width: 1200px;
+}
+
+.titulo-pagina {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1b2733;
+    margin: 0;
+}
+
+/* ===== Indicadores do dashboard ===== */
+.card-indicador {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+    height: 100%;
+}
+
+.card-indicador-icon {
+    font-size: 1.6rem;
+}
+
+.card-indicador-valor {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1b2733;
+    margin-top: 6px;
+    line-height: 1;
+}
+
+.card-indicador-label {
+    color: #7a8794;
+    font-size: .85rem;
+    margin-top: 4px;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+}
+
+/* ===== Login ===== */
+.tela-login {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--azul-escuro), var(--azul));
+    margin: 0;
+}
+
+.card-login {
+    background: #fff;
+    padding: 36px 32px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 380px;
+}
+
+.login-logo {
+    font-size: 2.6rem;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 64px;
+    }
+    .sidebar-brand span:not(.brand-icon),
+    .sidebar-nav a span,
+    .sidebar-nav a {
+        font-size: 0;
+    }
+    .sidebar-nav a i {
+        font-size: 1.1rem;
+    }
+    .conteudo {
+        padding: 18px;
+    }
+}
